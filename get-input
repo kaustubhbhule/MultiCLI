@@ -1,0 +1,17 @@
+#!/bin/bash
+
+clear
+echo -en " Enter your name: "
+read name
+tmux send-keys -t $1:0.0 "$name" C-m 
+
+while :
+do
+    clear
+    echo -en " $name: "
+    read msg
+    tmux send-keys -t $1:0.0 "  $name: $msg" C-m 
+    if [ "$msg" == "!exit" ]; then
+        tmux kill-session -t $1
+    fi
+done
